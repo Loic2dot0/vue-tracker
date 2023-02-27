@@ -1,4 +1,6 @@
-# vue-tracker
+# Vue Tracker
+
+Une application de time tracking utilisant le framework Vue.js 3.
 
 This template should help get you started developing with Vue 3 in Vite.
 
