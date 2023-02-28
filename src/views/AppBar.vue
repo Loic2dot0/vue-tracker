@@ -1,15 +1,21 @@
 <template>
-    <v-app-bar-nav-icon @click="drawer = !drawer" ></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="sendToggleMenu()" ></v-app-bar-nav-icon>
     <v-app-bar-title>Vue Tracker</v-app-bar-title>
 </template>
 
 <script>
     export default {
+        emits:['toggleMenu'],
         name: "AppBar",
         data(){
             return {
-            drawer: null
+        
             } 
+        },
+        methods: {
+            sendToggleMenu(){
+                this.$emit('toggleMenu');
+            }
         }
     }
 </script>
