@@ -5,20 +5,24 @@
       </v-navigation-drawer>
 
       <v-app-bar :elevation="2" >
-        <v-app-bar-nav-icon @click="drawer = !drawer" ></v-app-bar-nav-icon>
-        <v-app-bar-title>Vue Tracker</v-app-bar-title>
+          <Appbar></Appbar>
       </v-app-bar>
 
       <v-main>
-
+        <!-- -->
       </v-main>
     </v-app>
 </template>
 
 <script>
 import Menu from "./views/Menu.vue";
+import Appbar from "./views/AppBar.vue";
 
 export default {
+  components: {
+    Menu,
+    Appbar
+  },
   data(){
     return {
       drawer: null
@@ -28,7 +32,5 @@ export default {
 </script>
 
 <style scoped>
-main{
-  height: 100vh;
-}
+
 </style>
