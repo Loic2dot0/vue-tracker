@@ -5,7 +5,6 @@
             v-for="(item, i) in items"
             :key="i"
             :value="item"
-            active-color="primary"
             :disabled="item.disabled"
         >
             <template v-slot:prepend>
@@ -21,7 +20,6 @@ export default {
     name: "Menu",
     data(){
         return{
-            selectedItem: 1,
             items: [
                 { text: "Tracker", icon: "mdi-timer-star-outline", disabled: false },
                 { text: "Catégories", icon: "mdi-folder-open-outline", disabled: true },
