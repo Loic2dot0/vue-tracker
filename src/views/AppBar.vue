@@ -16,6 +16,7 @@
                     variant="flat"
                     icon="mdi-restart"
                     color="info"
+                    @click="startTask()"
                 ></v-btn>
                 <v-btn
                     v-else
@@ -26,8 +27,7 @@
                 <span class="currentDuration">00:00:00</span>
             </v-col>
         </v-row>
-    </v-container>
-    
+    </v-container>  
 </template>
 
 <script>
@@ -36,15 +36,52 @@
         name: "AppBar",
         data(){
             return {
-                //rules: [value => !!value || 'Required.'],
+                rules: [value => !!value || 'Required.'],
                 taskname: '',
                 isTaskInProgress: false,
-                errorMsg: ''
+                errorMsg: null,
+                startTime: null,
+                nowTime: null,
             } 
         },
         methods: {
             sendToggleMenu(){
                 this.$emit('toggleMenu');
+            },
+            startTask(){
+                // vérifications
+                if(this.taskname.length == 0){
+                    this.errorMsg = 'Le nom de la tâche ne peut être vide.';
+                    console.error(this.errorMsg);
+                    return;
+                } else if(this.isTaskInProgress){
+                    this.errorMsg = 'Une tâche est déjà en cours.';
+                    console.error(this.errorMsg);
+                    return;
+                } else {
+                    this.errorMsg = null;
+                }
+                // lancement de la tâche
+                this.isTaskInProgress = true;
+            },
+            stopTask(){
+                // vérifications
+                if(!this.isTaskInProgress){
+                    this.errorMsg = 'Aucune tâche n\'est en cours.';
+                    console.error(this.errorMsg);
+                    return;
+                } 
+
+                // Envoie de la tâche
+                this$emit('newTask', {
+                    name : this.taskname, 
+                    startTime: this.startTime
+                });
+
+                // arrêt de la tâche
+                this.isTaskInProgress = false;
+                this.errorMsg = null;
+                this.taskname = '';
             }
         }
     }
