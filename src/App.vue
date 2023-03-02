@@ -4,7 +4,7 @@
         <Menu></Menu>
       </v-navigation-drawer>
 
-      <v-app-bar :elevation="2" >
+      <v-app-bar :elevation="2" height="auto">
           <Appbar @toggleMenu="drawer = !drawer"></Appbar>
       </v-app-bar>
 
