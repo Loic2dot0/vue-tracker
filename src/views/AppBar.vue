@@ -25,7 +25,7 @@
                     color="error"
                     @click="stopTask()"
                 ></v-btn>
-                <span class="currentDuration">00:00:00</span>
+                <span class="currentDuration">{{ currentDuration }}</span>
             </v-col>
         </v-row>
     </v-container>  
@@ -43,6 +43,26 @@
                 startTime: null,
                 nowTime: null,
             } 
+        },
+        computed:{
+            currentDuration(){
+                if(this.startTime && this.nowTime){
+                    return this.durationBetweenTimestamps(this.startTime, this.nowTime);
+                } else {
+                    return '00:00:00';
+                }
+            }
+        },
+        watch:{
+            isTaskInProgress(isInprogress){
+                if(isInprogress){
+                    this.interval = setInterval(() => {
+                        this.nowTime = Date.now();
+                    }, 1000);
+                } else {
+                    clearInterval(this.interval);
+                }
+            }
         },
         methods: {
             sendToggleMenu(){
@@ -84,6 +104,16 @@
                 this.isTaskInProgress = false;
                 this.errorMsg = null;
                 this.taskname = '';
+                this.startTime = null;
+                this.nowTime = null;
+            },
+            durationBetweenTimestamps(start, end){
+                let seconds = Math.floor((end / 1000) - (start / 1000));
+                let minutes = Math.floor(seconds / 60);
+                let hours = Math.floor(minutes / 60);
+                seconds = seconds % 60;
+                minutes= minutes % 60;                
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
         }
     }
