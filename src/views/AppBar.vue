@@ -10,18 +10,20 @@
             <v-col cols="12" sm="9">
                 <v-text-field label="Nom de votre tâche" :rules="rules" hide-details="auto" v-model="taskname"></v-text-field>
             </v-col>
-            <v-col cols="12" sm="auto" class="container-btns">
+            <v-col cols="12" sm="3" class="container-btnTimer">
                 <v-btn
+                    v-if="!isTaskInProgress"
                     variant="flat"
                     icon="mdi-restart"
                     color="info"
                 ></v-btn>
                 <v-btn
+                    v-else
                     variant="flat"
                     icon="mdi-stop"
                     color="error"
                 ></v-btn>
-                <span>00:00:00</span>
+                <span class="currentDuration">00:00:00</span>
             </v-col>
         </v-row>
     </v-container>
@@ -36,8 +38,8 @@
             return {
                 //rules: [value => !!value || 'Required.'],
                 taskname: '',
+                isTaskInProgress: false,
                 errorMsg: ''
-        
             } 
         },
         methods: {
@@ -57,15 +59,9 @@
         display: flex;
         align-items: center;
     }
-
-    .v-text-field{
-        border-bottom: none;
-        outline: none;
-    }
-    .container-btns{
-        *{
-            margin: 0 5px;
-        }
-       
+    .container-btnTimer{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 </style>
