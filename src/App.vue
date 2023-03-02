@@ -5,7 +5,7 @@
       </v-navigation-drawer>
 
       <v-app-bar :elevation="2" height="auto">
-          <Appbar @toggleMenu="drawer = !drawer"></Appbar>
+          <Appbar @toggleMenu="drawer = !drawer" @newTask="addTask($event)"></Appbar>
       </v-app-bar>
 
       <v-main>
@@ -25,8 +25,15 @@ export default {
   },
   data(){
     return {
-      drawer: null
+      drawer: null,
+      tasks: [],
     } 
+  },
+  methods: {
+    addTask({name, startTime}){
+      this.tasks.push({name, startTime});
+      console.log(this.tasks)
+    }
   }
 }
 </script>
