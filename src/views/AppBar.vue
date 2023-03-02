@@ -8,7 +8,7 @@
         </v-row>
         <v-row>
             <v-col cols="12" sm="9">
-                <v-text-field label="Nom de votre tâche" :rules="rules" hide-details="auto" v-model="taskname"></v-text-field>
+                <v-text-field label="Nom de votre tâche" hide-details="auto" v-model="taskname"></v-text-field>
             </v-col>
             <v-col cols="12" sm="3" class="container-btnTimer">
                 <v-btn
@@ -23,6 +23,7 @@
                     variant="flat"
                     icon="mdi-stop"
                     color="error"
+                    @click="stopTask()"
                 ></v-btn>
                 <span class="currentDuration">00:00:00</span>
             </v-col>
@@ -32,11 +33,10 @@
 
 <script>
     export default {
-        emits:['toggleMenu'],
+        emits:['toggleMenu', 'newTask'],
         name: "AppBar",
         data(){
             return {
-                rules: [value => !!value || 'Required.'],
                 taskname: '',
                 isTaskInProgress: false,
                 errorMsg: null,
@@ -63,6 +63,8 @@
                 }
                 // lancement de la tâche
                 this.isTaskInProgress = true;
+                this.startTime = Date.now();
+                this.nowTime = Date.now();
             },
             stopTask(){
                 // vérifications
@@ -73,7 +75,7 @@
                 } 
 
                 // Envoie de la tâche
-                this$emit('newTask', {
+                this.$emit('newTask', {
                     name : this.taskname, 
                     startTime: this.startTime
                 });
