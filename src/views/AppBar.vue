@@ -33,7 +33,19 @@
                 <span class="currentDuration">{{ currentDuration }}</span>
             </v-col>
         </v-row>
-    </v-container>  
+    </v-container>
+    
+    <v-snackbar v-model="snackbar" :timeout="timeout" color="red" location="top right">
+        {{ errorMsg }}
+        <template v-slot:actions>
+            <v-btn
+                variant="text"
+                @click="snackbar = false"
+            >
+                X
+            </v-btn>
+        </template>
+    </v-snackbar>
 </template>
 
 <script>
@@ -48,6 +60,8 @@
                 startTime: null,
                 nowTime: null,
                 interval: null,
+                snackbar: false,
+                timeout: 2500,
             } 
         },
         computed:{
@@ -85,11 +99,11 @@
                 // vérifications
                 if(this.taskname.length == 0){
                     this.errorMsg = 'Le nom de la tâche ne peut être vide.';
-                    console.error(this.errorMsg);
+                    this.snackbar = true;
                     return;
                 } else if(this.isTaskInProgress){
                     this.errorMsg = 'Une tâche est déjà en cours.';
-                    console.error(this.errorMsg);
+                    this.snackbar = true;
                     return;
                 } else {
                     this.errorMsg = null;
