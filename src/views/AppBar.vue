@@ -8,7 +8,12 @@
         </v-row>
         <v-row>
             <v-col cols="12" sm="9">
-                <v-text-field label="Nom de votre tâche" hide-details="auto" v-model="taskname"></v-text-field>
+                <v-text-field 
+                    label="Nom de votre tâche"
+                    hide-details="auto"
+                    v-model="taskname"
+                    @keyup.enter="toggleTask()"
+                ></v-text-field>
             </v-col>
             <v-col cols="12" sm="3" class="container-btnTimer">
                 <v-btn
@@ -42,6 +47,7 @@
                 errorMsg: null,
                 startTime: null,
                 nowTime: null,
+                interval: null,
             } 
         },
         computed:{
@@ -67,6 +73,13 @@
         methods: {
             sendToggleMenu(){
                 this.$emit('toggleMenu');
+            },
+            toggleTask(){
+                if(this.isTaskInProgress){
+                    this.stopTask();
+                } else {
+                    this.startTask();
+                }
             },
             startTask(){
                 // vérifications
