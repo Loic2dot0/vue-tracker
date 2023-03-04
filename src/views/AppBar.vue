@@ -19,7 +19,7 @@
                 <v-btn
                     v-if="!isTaskInProgress"
                     variant="flat"
-                    icon="mdi-restart"
+                    icon="mdi-play"
                     color="info"
                     @click="startTask()"
                 ></v-btn>
