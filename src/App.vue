@@ -8,8 +8,8 @@
           <Appbar @toggleMenu="drawer = !drawer" @newTask="addTask($event)"></Appbar>
       </v-app-bar>
 
-      <v-main>  
-          {{ tasks }}
+      <v-main>
+          <TaskList :tasks="tasks"></TaskList>
       </v-main>
     </v-app>
 </template>
@@ -17,12 +17,14 @@
 <script>
 import Menu from "./views/Menu.vue";
 import Appbar from "./views/AppBar.vue";
+import TaskList from "./views/TaskList.vue";
 import { v4 as uuid } from '@lukeed/uuid';
 
 export default {
   components: {
     Menu,
-    Appbar
+    Appbar,
+    TaskList
   },
   data(){
     return {
