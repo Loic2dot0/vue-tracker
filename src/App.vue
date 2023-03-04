@@ -8,8 +8,8 @@
           <Appbar @toggleMenu="drawer = !drawer" @newTask="addTask($event)"></Appbar>
       </v-app-bar>
 
-      <v-main>
-        <!-- -->
+      <v-main>  
+          {{ tasks }}
       </v-main>
     </v-app>
 </template>
@@ -17,6 +17,7 @@
 <script>
 import Menu from "./views/Menu.vue";
 import Appbar from "./views/AppBar.vue";
+import { v4 as uuid } from '@lukeed/uuid';
 
 export default {
   components: {
@@ -31,13 +32,20 @@ export default {
   },
   methods: {
     addTask({name, startTime}){
-      this.tasks.push({name, startTime});
-      console.log(this.tasks)
+      // ajout de la tâche en local
+      this.tasks.unshift({
+        id: uuid(),
+        name,
+        startTime,
+        endTime: Date.now()
+      });
     }
   }
 }
 </script>
 
 <style scoped>
-
+  .v-app-bar{
+    position: relative!important;
+  }
 </style>
