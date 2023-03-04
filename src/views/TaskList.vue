@@ -5,13 +5,13 @@
                 <th class="text-left">
                     Tâche
                 </th>
-                <th class="text-left">
-                    Début - fin
+                <th class="text-center">
+                    Heure Début / Fin
                 </th>
-                <th class="text-left">
+                <th class="text-center">
                     Durée
                 </th>
-                <th class="text-left">
+                <th class="text-center">
                     Actions
                 </th>
             </tr>
@@ -22,9 +22,9 @@
                 :key="task.id"
             >
                 <td>{{ task.name }}</td>
-                <td>{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
-                <td>{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
-                <td>action button</td>
+                <td class="text-center">{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
+                <td class="text-center">{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
+                <td class="text-center">action button</td>
             </tr>
         </tbody>
     </v-table>
