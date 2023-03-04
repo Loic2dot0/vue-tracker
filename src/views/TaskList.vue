@@ -22,8 +22,8 @@
                 :key="task.id"
             >
                 <td>{{ task.name }}</td>
-                <td>{{ task.startTime }} - {{ task.endTime }}</td>
-                <td>00:00:00</td>
+                <td>{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
+                <td>{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
                 <td>action button</td>
             </tr>
         </tbody>
@@ -43,6 +43,22 @@
             return {
          
             } 
+        },
+        methods: {
+            formatTimestamp(timestamp){
+                return new Intl.DateTimeFormat('fr-FR', { 
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).format(timestamp);
+            },
+            durationBetweenTimestamps(start, end){
+                let seconds = Math.floor((end / 1000) - (start / 1000));
+                let minutes = Math.floor(seconds / 60);
+                let hours = Math.floor(minutes / 60);
+                seconds = seconds % 60;
+                minutes= minutes % 60;                
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }         
         }
     }
 </script>
