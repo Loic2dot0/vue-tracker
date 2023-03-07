@@ -24,15 +24,22 @@
                 <td>{{ task.name }}</td>
                 <td class="text-center">{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
                 <td class="text-center">{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
-                <td class="text-center">action button</td>
+                <td class="text-center">
+                    <TaskListActions></TaskListActions>
+                </td>
             </tr>
         </tbody>
     </v-table>
 </template>
 
 <script>
+    import TaskListActions from "../components/TaskListActions.vue";
+
     export default {
         name: "TaskList",
+        components: {
+            TaskListActions
+        },
         props: {
             tasks: {
                 type: Array,
