@@ -30,7 +30,11 @@
                     color="error"
                     @click="stopTask()"
                 ></v-btn>
-                <span class="currentDuration">{{ currentDuration }}</span>
+                <div class="timer">
+                    <span class="currentDuration">{{ currentDuration }}</span>
+                    <v-progress-linear indeterminate :active=isTaskInProgress color="info" rounded absolute location="bottom"></v-progress-linear>
+                </div>
+                
             </v-col>
         </v-row>
     </v-container>
@@ -159,5 +163,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .timer{
+        position: relative;
+        
+        span{
+            font-size: 1.2rem;
+            font-weight: bold;
+        }   
     }
 </style>
