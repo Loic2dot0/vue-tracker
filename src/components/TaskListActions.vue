@@ -3,7 +3,7 @@
         variant="outlined"
         icon="mdi-content-copy"
         size="small"
-        @click="copyToClipboard()"
+        @click="copyToClipboard(taskName)"
     >
     </v-btn>
     <v-btn
@@ -20,13 +20,17 @@
         size="small"
         @click=""
     ></v-btn>
-    
-    
 </template>
 
 <script>
     export default {
         name: "TaskListActions",
+        props: {
+            taskName: {
+                type: String,
+                default: ""
+            }
+        },
         data(){
             return {
                 info: null,

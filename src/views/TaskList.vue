@@ -24,8 +24,8 @@
                 <td>{{ task.name }}</td>
                 <td class="text-center">{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
                 <td class="text-center">{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
-                <td class="text-center">
-                    <TaskListActions></TaskListActions>
+                <td class="text-center tasklistactions">
+                    <TaskListActions :taskName="task.name"></TaskListActions>
                 </td>
             </tr>
         </tbody>
