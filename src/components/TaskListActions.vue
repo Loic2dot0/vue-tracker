@@ -11,20 +11,21 @@
         icon="mdi-restart"
         color="info"
         size="small"
-        @click=""
+        @click="sendRestart"
     ></v-btn>
     <v-btn
         variant="flat"
         icon="mdi-trash-can"
         color="error"
         size="small"
-        @click=""
+        @click="sendDelete"
     ></v-btn>
 </template>
 
 <script>
     export default {
         name: "TaskListActions",
+        emits: ["restart", "delete"],
         props: {
             taskName: {
                 type: String,
@@ -56,6 +57,12 @@
                             console.error(vm.info);
                         });
             },
+            sendRestart(){
+                this.$emit("restart");
+            },
+            sendDelete(){
+                this.$emit("delete");
+            }
         }
     }
 </script>
