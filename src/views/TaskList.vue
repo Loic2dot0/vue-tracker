@@ -25,7 +25,13 @@
                 <td class="text-center">{{ formatTimestamp(task.startTime) }} - {{ formatTimestamp(task.endTime) }}</td>
                 <td class="text-center">{{ durationBetweenTimestamps(task.startTime, task.endTime)}}</td>
                 <td class="text-center tasklistactions">
-                    <TaskListActions :taskName="task.name"></TaskListActions>
+                    <TaskListActions 
+                        :taskName="task.name"
+                        v-on="{
+                            restart: sendRestart(task.id), 
+                            delete: sendDelete(task.id)
+                        }"
+                    ></TaskListActions>
                 </td>
             </tr>
         </tbody>
@@ -65,6 +71,12 @@
                 seconds = seconds % 60;
                 minutes= minutes % 60;                
                 return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            },
+            sendRestart(id){
+                this.$emit("restart", id);
+            },
+            sendDelete(id){
+                this.$emit("delete", id);
             }         
         }
     }
