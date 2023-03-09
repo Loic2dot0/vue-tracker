@@ -9,7 +9,13 @@
       </v-app-bar>
 
       <v-main>
-          <TaskList :tasks="tasks"></TaskList>
+          <TaskList
+            :tasks="tasks"
+            v-on="{
+              restart: restartTask,
+              delete: deleteTask,
+            }"          
+          ></TaskList>
       </v-main>
     </v-app>
 </template>
