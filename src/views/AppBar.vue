@@ -145,6 +145,18 @@
                 seconds = seconds % 60;
                 minutes= minutes % 60;                
                 return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            },
+            restartTask(newTaskname){
+                // Arrêt de la tâche existante si besoin
+                if(this.isTaskInProgress){
+                    this.stopTask();
+                }
+                // lancement de la nouvelle tâche
+                // Utlisation de nextTick pour attendre que le DOM soit mis à jour
+                this.$nextTick(() => {
+                    this.taskname = newTaskname;
+                    this.startTask();
+                });
             }
         }
     }
