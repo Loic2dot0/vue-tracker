@@ -10,3 +10,8 @@ const instance = axios.create({
     }
 });
 
+// Récupération de toutes les tâches
+export async function getAllTasks(){
+    const res = await instance.get('/latest');
+    return res.data.record;
+}
