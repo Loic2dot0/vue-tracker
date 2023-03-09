@@ -5,14 +5,18 @@
       </v-navigation-drawer>
 
       <v-app-bar :elevation="2" height="auto">
-          <Appbar @toggleMenu="drawer = !drawer" @newTask="addTask($event)"></Appbar>
+          <Appbar
+            ref="appbar" 
+            @toggleMenu="drawer = !drawer"
+            @newTask="addTask($event)"
+          ></Appbar>
       </v-app-bar>
 
       <v-main>
           <TaskList
             :tasks="tasks"
             v-on="{
-              restart: restartTask,
+              restart: sendRestartTask,
               delete: deleteTask,
             }"          
           ></TaskList>
@@ -48,15 +52,29 @@ export default {
         endTime: Date.now()
       });
     },
-    deleteTask(id){
+    deleteTask(taskId){
+      // Récupération de l'id de la tache à supprimer
       let taskIndex = null;
       this.tasks.forEach((task, index) => {
-        if(task.id === id){
+        if(task.id === taskId){
           taskIndex = index;
         }
       });
+      // Suppression de la tâche
       this.tasks.splice(taskIndex, 1);
     },
+    sendRestartTask(taskId){
+      // Récupération du nom de la tache à relancer
+      let newTaskname = null;
+      this.tasks.forEach(task => {
+        if(task.id === taskId){
+          newTaskname = task.name;
+        }
+      });
+      // Relancement de la tâche
+      // $refs pour passer par le composant Appbar pour pouvoir utiliser la fonction restartTask)
+      this.$refs.appbar.restartTask(newTaskname);
+    }
   }
 }
 </script>
