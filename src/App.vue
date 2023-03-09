@@ -47,7 +47,16 @@ export default {
         startTime,
         endTime: Date.now()
       });
-    }
+    },
+    deleteTask(id){
+      let taskIndex = null;
+      this.tasks.forEach((task, index) => {
+        if(task.id === id){
+          taskIndex = index;
+        }
+      });
+      this.tasks.splice(taskIndex, 1);
+    },
   }
 }
 </script>
