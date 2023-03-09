@@ -30,6 +30,10 @@
             taskName: {
                 type: String,
                 default: ""
+            },
+            taskId: {
+                type: String,
+                require: true
             }
         },
         data(){
@@ -58,10 +62,10 @@
                         });
             },
             sendRestart(){
-                this.$emit("restart");
+                this.$emit("restart", this.taskId);
             },
             sendDelete(){
-                this.$emit("delete");
+                this.$emit("delete", this.taskId);
             }
         }
     }
