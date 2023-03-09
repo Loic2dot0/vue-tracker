@@ -25,10 +25,12 @@
 </template>
 
 <script>
+import { v4 as uuid } from '@lukeed/uuid';
+import * as TaskService from './services/TaskService.js';
+
 import Menu from "./views/Menu.vue";
 import Appbar from "./views/AppBar.vue";
 import TaskList from "./views/TaskList.vue";
-import { v4 as uuid } from '@lukeed/uuid';
 
 export default {
   components: {
@@ -75,6 +77,10 @@ export default {
       // $refs pour passer par le composant Appbar pour pouvoir utiliser la fonction restartTask)
       this.$refs.appbar.restartTask(newTaskname);
     }
+  },
+  async created(){
+    // Récupération des tâches enregistrées
+    this.tasks = await TaskService.getAllTasks();
   }
 }
 </script>
