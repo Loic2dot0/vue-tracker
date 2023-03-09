@@ -27,9 +27,10 @@
                 <td class="text-center tasklistactions">
                     <TaskListActions 
                         :taskName="task.name"
+                        :taskId="task.id"
                         v-on="{
-                            restart: sendRestart(task.id), 
-                            delete: sendDelete(task.id)
+                            restart: sendRestart, 
+                            delete: sendDelete,
                         }"
                     ></TaskListActions>
                 </td>
@@ -43,6 +44,7 @@
 
     export default {
         name: "TaskList",
+        emits: ["restart", "delete"],
         components: {
             TaskListActions
         },
