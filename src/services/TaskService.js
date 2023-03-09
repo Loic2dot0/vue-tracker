@@ -15,3 +15,8 @@ export async function getAllTasks(){
     const res = await instance.get('/latest');
     return res.data.record;
 }
+
+// Mise à jour de toutes les tâches
+export async function updateAllTasks(tasks){
+    const res = await instance.put('/', tasks);
+}
