@@ -46,6 +46,22 @@ export default {
       tasks: [],
     } 
   },
+  watch:{
+    tasks:{
+      // Mise à jour des tâches dans l'API
+      deep: true, // détecte les changements dans les sous-objets
+      async handler(newVal, oldVal){
+        if(newVal != null && oldVal != null){
+          try{
+            await TaskService.updateAllTasks(this.tasks);
+          }
+          catch (error){
+            console.error(error);
+          }
+        }
+      }
+    }
+  },
   methods: {
     addTask({name, startTime}){
       // ajout de la tâche en local
@@ -64,7 +80,7 @@ export default {
           taskIndex = index;
         }
       });
-      // Suppression de la tâche
+      // Suppression de la tâche en local
       this.tasks.splice(taskIndex, 1);
     },
     sendRestartTask(taskId){
@@ -86,7 +102,7 @@ export default {
     try {
       this.tasks = await TaskService.getAllTasks();
     }
-    catch (error) {
+    catch (error){
       console.error(error);
     }
     this.loading = false;    
