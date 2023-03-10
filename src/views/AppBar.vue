@@ -12,6 +12,7 @@
                     label="Nom de votre tâche"
                     hide-details="auto"
                     v-model="taskname"
+                    :disabled="isTaskInProgress"
                     @keyup.enter="toggleTask()"
                 ></v-text-field>
             </v-col>
