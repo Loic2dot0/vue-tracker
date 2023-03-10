@@ -39,23 +39,11 @@
             </v-col>
         </v-row>
     </v-container>
-    
-    <v-snackbar v-model="snackbar" :timeout="timeout" color="red" location="top right">
-        {{ errorMsg }}
-        <template v-slot:actions>
-            <v-btn
-                variant="text"
-                @click="snackbar = false"
-            >
-                X
-            </v-btn>
-        </template>
-    </v-snackbar>
 </template>
 
 <script>
     export default {
-        emits:['toggleMenu', 'newTask'],
+        emits:['toggleMenu', 'newTask', 'notification'],
         name: "AppBar",
         data(){
             return {
@@ -103,12 +91,18 @@
             startTask(){
                 // vérifications
                 if(this.taskname.length == 0){
-                    this.errorMsg = 'Le nom de la tâche ne peut être vide.';
-                    this.snackbar = true;
+                    this.$emit('notification', {
+                        title: 'Erreur',
+                        message: 'Le nom de la tâche ne peut être vide.',
+                        color:'error'
+                    });
                     return;
                 } else if(this.isTaskInProgress){
-                    this.errorMsg = 'Une tâche est déjà en cours.';
-                    this.snackbar = true;
+                    this.$emit('notification', {
+                        title: 'Erreur',
+                        message: 'Une tâche est déjà en cours.',
+                        color:'error'
+                    });
                     return;
                 } else {
                     this.errorMsg = null;

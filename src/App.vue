@@ -9,6 +9,7 @@
             ref="appbar" 
             @toggleMenu="drawer = !drawer"
             @newTask="addTask($event)"
+            @notification="displayNotification($event)"
           ></Appbar>
       </v-app-bar>
 
@@ -22,6 +23,17 @@
             }"          
           ></TaskList>
       </v-main>
+
+      <v-snackbar v-model="isNotification" timeout="2500" :color="error.color" location="top right">
+        <div class="text-subtitle-1 pb-2">{{ error.title}}</div>
+        <p>{{ error.message }}</p>
+        <template v-slot:actions>
+            <v-btn
+                variant="text"
+                @click="isNotification = false"
+            >X</v-btn>
+        </template>
+    </v-snackbar>
     </v-app>
 </template>
 
@@ -44,6 +56,12 @@ export default {
       drawer: null,
       loading: false,
       tasks: [],
+      isNotification: false,
+      error:{
+        title: null,
+        message: null,
+        color: null
+      }
     } 
   },
   watch:{
@@ -57,6 +75,11 @@ export default {
           }
           catch (error){
             console.error(error);
+            this.displayNotification({
+              title: 'Mode hors-ligne',
+              message: 'Synchronisation des tâches impossible.',
+              color: 'warning'
+            });
           }
         }
       }
@@ -94,6 +117,14 @@ export default {
       // Relancement de la tâche
       // $refs pour passer par le composant Appbar pour pouvoir utiliser la fonction restartTask)
       this.$refs.appbar.restartTask(newTaskname);
+    },
+    displayNotification({title, message, color}){
+      this.error = {
+        title,
+        message,
+        color
+      }
+      this.isNotification = true;
     }
   },
   async created(){
@@ -104,8 +135,13 @@ export default {
     }
     catch (error){
       console.error(error);
+      this.displayNotification({
+        title: 'Mode hors-ligne',
+        message: 'Synchronisation des tâches impossible.',
+        color: 'warning'
+      });
     }
-    this.loading = false;    
+    this.loading = false;
   }
 }
 </script>
