@@ -15,6 +15,7 @@
       <v-main>
           <TaskList
             :tasks="tasks"
+            :loading="loading"
             v-on="{
               restart: sendRestartTask,
               delete: deleteTask,
@@ -41,6 +42,7 @@ export default {
   data(){
     return {
       drawer: null,
+      loading: false,
       tasks: [],
     } 
   },
@@ -79,8 +81,15 @@ export default {
     }
   },
   async created(){
+    this.loading = true;
     // Récupération des tâches enregistrées
-    this.tasks = await TaskService.getAllTasks();
+    try {
+      this.tasks = await TaskService.getAllTasks();
+    }
+    catch (error) {
+      console.error(error);
+    }
+    this.loading = false;    
   }
 }
 </script>

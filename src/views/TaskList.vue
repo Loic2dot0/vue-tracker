@@ -1,5 +1,15 @@
 <template>
-    <v-table>
+    <div class="tasklist-loader" v-if="loading">
+        <v-progress-circular
+            indeterminate
+            color="info"
+        ></v-progress-circular>
+        <p>Chargement des tâches...</p>
+    </div>
+    <div class="tasklist-empty" v-else-if="tasks.length == 0">
+        <p>Aucune tâche</p>
+    </div>    
+    <v-table v-else>
         <thead>
             <tr>
                 <th class="text-left">
@@ -45,14 +55,18 @@
     export default {
         name: "TaskList",
         emits: ["restart", "delete"],
-        components: {
-            TaskListActions
-        },
         props: {
             tasks: {
                 type: Array,
                 default: []
+            },
+            loading: {
+                type: Boolean,
+                default: true
             }
+        },
+        components: {
+            TaskListActions
         },
         data(){
             return {
@@ -85,5 +99,12 @@
 </script>
 
 <style lang="scss" scoped>
+    .tasklist-loader, .tasklist-empty{
+        padding-top: 50px;
+        text-align: center;
 
+        .v-progress-circular{
+            margin-bottom: 10px;
+        }
+    }
 </style>
